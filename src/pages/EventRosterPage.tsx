@@ -1,11 +1,6 @@
-import { useState } from 'react';
-import { eventRoster } from '../data/eventRoster';
+import React from 'react';
 import PageContainer from '../components/Layout/PageContainer';
-
-
-function formatDate(date: string) {
-  return new Date(date).toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
-}
+import KbListWithFavs from '../components/KB/KbListWithFavs';
 
 export default function EventRosterPage() {
   const [search, setSearch] = useState('');

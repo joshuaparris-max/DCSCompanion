@@ -20,14 +20,15 @@ import HomeDashboard from './pages/HomeDashboard';
 import DcsKnowledgeBase from './pages/DcsKnowledgeBase';
 import AskDcsLLM from './pages/AskDcsLLM';
 import SettingsPage from './pages/SettingsPage';
-import StaffDirectoryPage from './pages/StaffDirectoryPage';
-import SystemsCheatSheetPage from './pages/SystemsCheatSheetPage';
-import EventRosterPage from './pages/EventRosterPage';
-import PreschoolWellingtonSupportPage from './pages/PreschoolWellingtonSupportPage';
+import StaffDirectoryPage from './pages/StaffDirectoryPage.kb';
+import SystemsCheatSheetPage from './pages/SystemsCheatSheetPage.kb';
+import EventRosterPage from './pages/EventRosterPage.kb';
+import PreschoolWellingtonSupportPage from './pages/PreschoolWellingtonSupportPage.kb';
 import TaskTrackerPage from './pages/TaskTrackerPage';
 import ResourceBookingPage from './pages/ResourceBookingPage';
 import AnnouncementsPanelPage from './pages/AnnouncementsPanelPage';
 import OnboardingGuidePage from './pages/OnboardingGuidePage';
+import KbDetailPage from './pages/KbDetailPage';
 
 function AppContent() {
   const [sidebarWidth, setSidebarWidth] = useState(() => {
@@ -86,6 +87,7 @@ function AppContent() {
             <Route path="/resource-booking" element={<ProtectedRoute><ResourceBookingPage /></ProtectedRoute>} />
             <Route path="/announcements-panel" element={<ProtectedRoute><AnnouncementsPanelPage /></ProtectedRoute>} />
             <Route path="/onboarding-guide" element={<ProtectedRoute><OnboardingGuidePage /></ProtectedRoute>} />
+            <Route path="/kb/:type/:id" element={<ProtectedRoute><KbDetailPage /></ProtectedRoute>} />
           </Routes>
         </main>
       </div>

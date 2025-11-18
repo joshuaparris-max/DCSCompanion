@@ -1,9 +1,52 @@
+`(Copied from repository root - DEPLOYMENT.md)`
+
+---
+
+# Deployment Notes
+
+This file outlines common deployment options for DCS Companion.
+
+## GitHub Pages (via Actions)
+
+- Suitable for static frontend sites (no server-side functions)
+- Use the included GitHub Actions workflow that builds `npm run build` and deploys the `dist` folder to `gh-pages` branch
+- Configure repo Secrets for any `VITE_*` environment variables
+
+## Vercel
+
+- Recommended for simple deployments with environment secrets
+- Create a project from GitHub, add `VITE_FIREBASE_*` secrets
+- Automatic builds on push
+
+## Netlify
+
+- Similar to Vercel. Set `build` to `npm run build` and `publish` to `dist`
+
+## Firebase Hosting
+
+- Use when you want combined hosting and Firebase backend
+- Requires `firebase-tools` and `firebase login`
+- Use `firebase init hosting` and `firebase deploy`
+
+## Cloud Functions Consideration
+
+- Cloud Functions require Blaze plan (pay-as-you-go)
+- If you need to hide API keys or use server-side LLM proxy, consider upgrading or using a third-party server
+
+## Environment Variables
+
+Set the following env vars in your hosting platform:
+- `VITE_FIREBASE_API_KEY`
+- `VITE_FIREBASE_AUTH_DOMAIN`
+- `VITE_FIREBASE_PROJECT_ID`
+- `VITE_FIREBASE_APP_ID`
+- `VITE_GROQ_API_KEY` (if using Ask DCS LLM feature)
 # Deployment Guide - GitHub Pages + Firebase
 
 ## Setup Instructions
 
 ### 1. Get Your GitHub Username
-Your GitHub Pages URL will be: `https://USERNAME.github.io/DCSCompanion/`
+Your GitHub Pages URL will be: `https://joshuaparris-max.github.io/DCSCompanion/`
 
 ### 2. Configure Firebase
 
@@ -12,7 +55,7 @@ Your GitHub Pages URL will be: `https://USERNAME.github.io/DCSCompanion/`
 2. Select your DCSCompanion project
 3. Go to **Authentication** > **Settings** > **Authorized domains**
 4. Click **Add domain**
-5. Add: `https://USERNAME.github.io` (replace USERNAME with your actual GitHub username)
+5. Add: `https://joshuaparris-max.github.io/DCSCompanion/` (replace USERNAME with your actual GitHub username)
 
 #### Update Firestore Security Rules (Optional)
 The current rules already support GitHub Pages deployment. No changes needed if you're just deploying as-is.

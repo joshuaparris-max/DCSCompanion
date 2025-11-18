@@ -1,3 +1,47 @@
+`(Copied from repository root - AUTH_SETUP.md)`
+
+---
+
+# Authentication Setup (DCS Companion)
+
+This document explains how Authentication is wired in the DCS Companion project.
+
+## Overview
+
+- Uses Firebase Authentication (Email/Password)
+- `src/contexts/AuthContext.tsx` contains high-level login, register, user state
+- `src/services/firebaseClient.ts` manages Firebase app initialization
+- `VITE_FIREBASE_*` env vars in `.env.local` control configuration
+
+## Registration Flow
+
+1. User fills registration form in `RegisterPage.tsx`
+2. `AuthContext` calls `createUserWithEmailAndPassword`
+3. User document is created in Firestore under `users/{uid}`
+4. Verification email is sent via Firebase `sendEmailVerification`
+
+## Login Flow
+
+1. Login form calls `signInWithEmailAndPassword`
+2. `AuthContext` sets `user` and `profile` context
+3. Protected routes use `ProtectedRoute.tsx` and `authRequired` checks
+
+## Email Verification
+
+- `VerifyEmailPage.tsx` handles verification tokens
+- Users can't access some routes until verified
+
+## Security Notes
+
+- Keep `.env.local` out of source control
+- For production, use CI secrets (Vercel/Netlify/GitHub Actions)
+- Consider using server-side proxy for sensitive API calls
+
+## Sources (Code)
+
+- `src/contexts/AuthContext.tsx`
+- `src/pages/LoginPage.tsx`, `RegisterPage.tsx`, `VerifyEmailPage.tsx`
+- `src/components/EmailVerificationBanner.tsx`
 # DCS Companion - Authentication Implementation
 
 Complete guide for setting up and using the new multi-user authentication system.

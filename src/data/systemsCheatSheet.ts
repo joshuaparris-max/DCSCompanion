@@ -8,71 +8,40 @@ export type SystemInfo = {
   tips?: string[];
 };
 
+// SAMPLE DATA - Replace with real internal systems loaded from Firestore
+// Do NOT commit internal system URLs, credentials, or organization names to this repo.
+// Load live systems from Firestore (kb collection type='systems')
 export const systemsCheatSheet: SystemInfo[] = [
   {
-    id: 'sentral',
-    name: 'Sentral',
-    description: 'Student Information System for attendance, reports, and parent portal.',
-    url: 'https://sentral.dubbocs.edu.au/',
-    help: 'Contact ICT for access or password resets.',
+    id: 'sample-sis',
+    name: 'Student Information System',
+    description: 'System for managing student data, attendance, and reporting.',
+    url: 'https://example.com/sis',
+    help: 'Contact your ICT team for support.',
     tips: [
-      'Use your DCS credentials to log in.',
-      'Parents use the Parent Portal for student info.',
-      'Roll marking and student data are managed here.'
+      'Use your school credentials to log in.',
+      'This is for authorized staff only.',
     ]
   },
   {
-    id: 'schoolbox',
-    name: 'Schoolbox (OurDCS Portal)',
-    description: 'Internal portal for news, resources, e-learning, and community updates.',
-    url: 'https://ourdcs.dubbocs.edu.au/',
-    help: 'See ICT for login issues.',
+    id: 'sample-email',
+    name: 'Email & Collaboration',
+    description: 'Email, chat, and file sharing platform.',
+    url: 'https://mail.example.com/',
+    help: 'Contact IT support for account issues.',
     tips: [
-      'Staff and students use the same login as email.',
-      'Check the portal for daily bulletins and announcements.'
+      'Use your school email credentials.',
+      'Check announcements regularly.',
     ]
   },
   {
-    id: 'm365',
-    name: 'Microsoft 365',
-    description: 'Email, Teams, SharePoint, OneDrive, and Office apps for staff and students.',
-    url: 'https://portal.office.com/',
-    help: 'ICT manages accounts and access.',
+    id: 'sample-mdm',
+    name: 'Device Management',
+    description: 'Management platform for mobile devices.',
+    help: 'Contact ICT for device support.',
     tips: [
-      'Email: Outlook Web or desktop app.',
-      'Teams: Used for chat, meetings, and some classes.',
-      'SharePoint: Staff intranet and shared files.'
+      'Used for app distribution and updates.',
+      'Request support through your IT team.'
     ]
   },
-  {
-    id: 'jamf',
-    name: 'Jamf School',
-    description: 'Mobile Device Management for iPads.',
-    url: 'https://school.jamfcloud.com/',
-    help: 'ICT can push apps or reset devices.',
-    tips: [
-      'Use for managing iPad apps and restrictions.',
-      'Contact ICT for app deployment.'
-    ]
-  },
-  {
-    id: 'sccm',
-    name: 'Microsoft SCCM',
-    description: 'PC deployment and management for Windows devices.',
-    help: 'ICT handles imaging and updates.',
-    tips: [
-      'Used for deploying software and updates to staff/student PCs.'
-    ]
-  },
-  {
-    id: 'library',
-    name: 'Library System',
-    description: 'Library catalog and borrowing system (e.g., Oliver or Infiniti).',
-    help: 'Library staff manage accounts and catalog.',
-    tips: [
-      'Use barcode scanner for check-in/out.',
-      'Ask Library staff for help with catalog searches.'
-    ]
-  },
-  // Add more systems as needed
 ];

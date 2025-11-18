@@ -1,3 +1,52 @@
+`(Copied from repository root - FIREBASE_RULES.md)`
+
+---
+
+# Firestore Security Rules (DCS Companion)
+
+Place these rules into the Firestore Rules editor in the Firebase Console.
+
+These rules are written to support the `kb` collection pattern and per-user profile documents.
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Public KB collection - read for all authenticated users
+    match /kb/{kbId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && isValidKb(request.resource.data);
+      allow update, delete: if request.auth != null && isOwnerOrAdmin();
+    }
+
+    // User profile documents
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    function isOwnerOrAdmin() {
+      return request.auth != null && (request.auth.uid == resource.data.createdBy || isAdmin());
+    }
+
+    function isAdmin() {
+      return request.auth.token.admin == true;
+    }
+
+    function isValidKb(data) {
+      return data.keys().hasAll(['title','type','createdBy','createdAt'])
+        && data.title is string
+        && data.type is string
+        && data.createdBy is string
+        && data.createdAt is timestamp;
+    }
+  }
+}
+```
+
+Notes:
+- Tweak `isAdmin()` to your admin claim strategy.
+- These are example rules — review them before using in production.
 # Firestore Security Rules for DCS Companion
 
 These rules protect user data while allowing proper access patterns.
