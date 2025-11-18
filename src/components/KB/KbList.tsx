@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import KbItemCard from './KbItemCard';
 import KbEditor from './KbEditor';
-import kbService, { KbItem } from '../../services/kbService';
+import kbService from '../../services/kbService';
+import type { KbItem } from '../../services/kbService';
 
 type Props = {
   type: string;

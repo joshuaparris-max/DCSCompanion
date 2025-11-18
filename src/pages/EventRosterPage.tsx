@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PageContainer from '../components/Layout/PageContainer';
-import KbListWithFavs from '../components/KB/KbListWithFavs';
+
+type EventItem = {
+  id: string;
+  title: string;
+  date: string | Date;
+  time?: string;
+  location?: string;
+  notes?: string;
+  type: 'event' | 'duty';
+};
+
+const formatDate = (date: string | Date): string => {
+  if (!date) return '';
+  const d = new Date(date);
+  return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+};
 
 export default function EventRosterPage() {
+  // Mock data - replace with your actual data fetching logic
+  const [eventRoster, setEventRoster] = useState<EventItem[]>([]);
   const [search, setSearch] = useState('');
   const filtered = eventRoster.filter(e =>
     e.title.toLowerCase().includes(search.toLowerCase()) ||
