@@ -1,0 +1,7 @@
+- [x] Scaffolded Vite + React + TS + Tailwind + PWA project
+- [x] Implemented folder structure and initial source files
+- [x] Configured TailwindCSS, ESLint, Prettier
+- [x] Added PWA support and manifest
+- [x] Implemented initial UI shell and routing
+- [x] Added README.md with instructions
+- [ ] Summarise architecture and next steps
