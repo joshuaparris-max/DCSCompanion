@@ -68,7 +68,13 @@ const DcsKnowledgeBase: React.FC = () => {
     if (!formData.title || !formData.summary) return;
     setKbItems(kbItems.map(item =>
       item.id === id
-        ? { ...item, title: formData.title, category: formData.category || item.category, summary: formData.summary, links: formData.links }
+        ? {
+            ...item,
+            title: formData.title as string,
+            category: (formData.category || item.category) as string,
+            summary: formData.summary as string,
+            links: formData.links,
+          }
         : item
     ));
     setEditingId(null);
