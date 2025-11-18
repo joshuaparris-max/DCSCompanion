@@ -1,6 +1,21 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import './styles/globals.css';
+
+// Components
 import Sidebar from './components/Layout/Sidebar';
 import TopBar from './components/Layout/TopBar';
+import { ProtectedRoute } from './components/ProtectedRoute';
+
+// Auth
+import { AuthProvider } from './contexts/AuthContext';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import VerifyEmailPage from './pages/VerifyEmailPage';
+import ProfilePage from './pages/ProfilePage';
+
+// Pages
 import HomeDashboard from './pages/HomeDashboard';
 import DcsKnowledgeBase from './pages/DcsKnowledgeBase';
 import AskDcsLLM from './pages/AskDcsLLM';
@@ -13,10 +28,8 @@ import TaskTrackerPage from './pages/TaskTrackerPage';
 import ResourceBookingPage from './pages/ResourceBookingPage';
 import AnnouncementsPanelPage from './pages/AnnouncementsPanelPage';
 import OnboardingGuidePage from './pages/OnboardingGuidePage';
-import { useState, useEffect } from 'react';
-import './styles/globals.css';
 
-function App() {
+function AppContent() {
   const [sidebarWidth, setSidebarWidth] = useState(() => {
     const savedWidth = localStorage.getItem('dcs-sidebar-width');
     return savedWidth ? parseInt(savedWidth, 10) : 260;
@@ -45,38 +58,53 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
-        <div
-          style={{ width: sidebarWidth }}
-          className="hidden md:block bg-gray-800 text-white h-full"
-        >
-          <Sidebar />
-        </div>
-        <div
-          className="hidden md:block w-1 bg-gray-700 cursor-col-resize hover:bg-gray-500 transition-colors"
-          onMouseDown={handleMouseDown}
-        ></div>
-        <div className="flex-1 flex flex-col">
-          <TopBar />
-          <main className="flex-1 overflow-y-auto p-4 md:p-8 bg-gray-100 dark:bg-gray-900">
-            <Routes>
-              <Route path="/" element={<HomeDashboard />} />
-              <Route path="/kb" element={<DcsKnowledgeBase />} />
-              <Route path="/ask-dcs" element={<AskDcsLLM />} />
-              <Route path="/settings" element={<SettingsPage />} />
-              <Route path="/staff-directory" element={<StaffDirectoryPage />} />
-              <Route path="/systems-cheat-sheet" element={<SystemsCheatSheetPage />} />
-              <Route path="/event-roster" element={<EventRosterPage />} />
-              <Route path="/support-panel" element={<PreschoolWellingtonSupportPage />} />
-              <Route path="/task-tracker" element={<TaskTrackerPage />} />
-              <Route path="/resource-booking" element={<ResourceBookingPage />} />
-              <Route path="/announcements-panel" element={<AnnouncementsPanelPage />} />
-              <Route path="/onboarding-guide" element={<OnboardingGuidePage />} />
-            </Routes>
-          </main>
-        </div>
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+      <div
+        style={{ width: sidebarWidth }}
+        className="hidden md:block bg-gray-800 text-white h-full"
+      >
+        <Sidebar />
       </div>
+      <div
+        className="hidden md:block w-1 bg-gray-700 cursor-col-resize hover:bg-gray-500 transition-colors"
+        onMouseDown={handleMouseDown}
+      ></div>
+      <div className="flex-1 flex flex-col">
+        <TopBar />
+        <main className="flex-1 overflow-y-auto p-4 md:p-8 bg-gray-100 dark:bg-gray-900">
+          <Routes>
+            <Route path="/" element={<ProtectedRoute><HomeDashboard /></ProtectedRoute>} />
+            <Route path="/kb" element={<ProtectedRoute><DcsKnowledgeBase /></ProtectedRoute>} />
+            <Route path="/ask-dcs" element={<ProtectedRoute><AskDcsLLM /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+            <Route path="/staff-directory" element={<ProtectedRoute><StaffDirectoryPage /></ProtectedRoute>} />
+            <Route path="/systems-cheat-sheet" element={<ProtectedRoute><SystemsCheatSheetPage /></ProtectedRoute>} />
+            <Route path="/event-roster" element={<ProtectedRoute><EventRosterPage /></ProtectedRoute>} />
+            <Route path="/support-panel" element={<ProtectedRoute><PreschoolWellingtonSupportPage /></ProtectedRoute>} />
+            <Route path="/task-tracker" element={<ProtectedRoute><TaskTrackerPage /></ProtectedRoute>} />
+            <Route path="/resource-booking" element={<ProtectedRoute><ResourceBookingPage /></ProtectedRoute>} />
+            <Route path="/announcements-panel" element={<ProtectedRoute><AnnouncementsPanelPage /></ProtectedRoute>} />
+            <Route path="/onboarding-guide" element={<ProtectedRoute><OnboardingGuidePage /></ProtectedRoute>} />
+          </Routes>
+        </main>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
+          <Route path="/*" element={<AppContent />} />
+        </Routes>
+      </AuthProvider>
     </Router>
   );
 }

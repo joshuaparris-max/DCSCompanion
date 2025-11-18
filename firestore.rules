@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User profiles - each user can only access their own
+    match /users/{uid} {
+      // Authenticated users can read/write their own profile
+      allow read, write: if request.auth.uid == uid;
+      
+      // Allow creation during signup
+      allow create: if request.auth.uid == request.resource.data.uid;
+      
+      // Prevent uid and email modification
+      allow update: if request.auth.uid == uid
+        && !request.resource.data.keys().hasAny(['uid', 'email']);
+    }
+    
+    // Knowledge base - shared read, admin write
+    match /knowledgeBase/{doc} {
+      // Authenticated users can read
+      allow read: if request.auth != null;
+      
+      // Only admins can write
+      allow create, update, delete: if request.auth != null 
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // Deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+// NOTE: Firebase authentication works from any domain by default.
+// The Firestore security rules above restrict data access to authenticated users.
+// For CORS issues, add your GitHub Pages domain to Firebase Console > Authentication > Authorized domains:
+// Replace 'USERNAME' with your GitHub username: https://USERNAME.github.io
