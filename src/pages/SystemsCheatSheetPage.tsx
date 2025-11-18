@@ -1,6 +1,6 @@
 import React from 'react';
 import { systemsCheatSheet } from '../data/systemsCheatSheet';
-import PageContainer from '../components/layout/PageContainer';
+import PageContainer from '../components/Layout/PageContainer';
 
 const SystemsCheatSheetPage: React.FC = () => {
   return (

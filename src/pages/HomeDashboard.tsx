@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PageContainer from '../components/layout/PageContainer';
+import PageContainer from '../components/Layout/PageContainer';
 
 const FOCUS_TEXT = `Today’s Focus: Serve with patience and joy.
 Scripture: "Whatever you do, work at it with all your heart, as working for the Lord, not for men." — Colossians 3:23`;

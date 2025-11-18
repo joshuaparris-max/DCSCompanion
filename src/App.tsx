@@ -23,14 +23,14 @@ function App() {
   });
 
   useEffect(() => {
-    localStorage.setItem('dcs-sidebar-width', sidebarWidth);
+    localStorage.setItem('dcs-sidebar-width', sidebarWidth.toString());
   }, [sidebarWidth]);
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: React.MouseEvent) => {
     const startX = e.clientX;
     const startWidth = sidebarWidth;
 
-    const onMouseMove = (moveEvent) => {
+    const onMouseMove = (moveEvent: globalThis.MouseEvent) => {
       const newWidth = Math.min(Math.max(200, startWidth + moveEvent.clientX - startX), 420);
       setSidebarWidth(newWidth);
     };

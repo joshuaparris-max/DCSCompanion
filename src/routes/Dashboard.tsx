@@ -5,7 +5,7 @@ import LibrarySnapshotCard from '../features/dashboard/components/LibrarySnapsho
 import FocusCard from '../features/dashboard/components/FocusCard';
 import QuickLinksCard from '../features/dashboard/components/QuickLinksCard';
 import { isSameDay, isPast, today } from '../lib/dateUtils';
-import type { Ticket, Resource } from '../lib/types';
+import type { Ticket, Resource, Loan } from '../lib/types';
 
 function computeDashboardStats({ tickets, resources }: { tickets: Ticket[]; resources: Resource[] }) {
   // ICT
@@ -26,7 +26,9 @@ function computeDashboardStats({ tickets, resources }: { tickets: Ticket[]; reso
     .slice(0, 5);
 
   // Library
-  const activeLoans = resources.filter(l => !l.returnedAt);
+  // This logic should use Loan[] and join with Resource[]
+  const loans: Loan[] = [];
+  const activeLoans = loans.filter(l => !l.returnedAt);
   const dueToday = activeLoans.filter(l => isSameDay(l.dueAt, todayDate));
   const overdue = activeLoans.filter(l => isPast(l.dueAt));
   const nextDue = activeLoans

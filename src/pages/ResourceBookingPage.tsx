@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { initialResources } from '../data/resourceInventory';
 import type { ResourceItem } from '../data/resourceInventory';
-import PageContainer from '../components/layout/PageContainer';
+import PageContainer from '../components/Layout/PageContainer';
 
 export default function ResourceBookingPage() {
   const [resources, setResources] = useState<ResourceItem[]>(initialResources);
@@ -13,7 +13,7 @@ export default function ResourceBookingPage() {
     setResources(resources => resources.map(r =>
       r.id === id ? { ...r, available: false, bookedBy: booker, dueDate } : r
     ));
-    setBookName('');
+    setBooker('');
     setBooker('');
     setDueDate('');
   }

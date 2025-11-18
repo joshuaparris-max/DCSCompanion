@@ -1,16 +1,14 @@
 import { useState } from 'react';
-import type { Resource, Borrower, Loan } from '../../../lib/types';
+import type { Resource } from '../../../lib/types';
 import { checkoutResource, returnResource, loadBorrowers, saveBorrowers } from '../../../lib/libraryStorage';
 import Button from '../../../components/UI/Button';
 
 interface Props {
   selectedResource?: Resource;
-  borrowers: Borrower[];
-  loans: Loan[];
   onRefresh: () => void;
 }
 
-export default function CirculationPanel({ selectedResource, borrowers, loans, onRefresh }: Props) {
+export default function CirculationPanel({ selectedResource, onRefresh }: Props) {
   const [borrowerCode, setBorrowerCode] = useState('');
   const [loanPeriod, setLoanPeriod] = useState(14);
   const [message, setMessage] = useState('');
@@ -19,12 +17,12 @@ export default function CirculationPanel({ selectedResource, borrowers, loans, o
   function handleCheckout() {
     if (!selectedResource) return;
     const result = checkoutResource({ barcode: selectedResource.barcode, borrowerCode, loanPeriodDays: loanPeriod });
-    if (result.ok) {
+    if (result.success) {
       setMessage('Checked out successfully!');
       setBorrowerCode('');
       onRefresh();
     } else {
-      setMessage(result.error);
+      setMessage(result.message);
     }
     setTimeout(() => setMessage(''), 2000);
   }
@@ -32,11 +30,11 @@ export default function CirculationPanel({ selectedResource, borrowers, loans, o
   function handleReturn() {
     if (!selectedResource) return;
     const result = returnResource(selectedResource.barcode);
-    if (result.ok) {
+    if (result.success) {
       setMessage('Returned successfully!');
       onRefresh();
     } else {
-      setMessage(result.error);
+      setMessage(result.message);
     }
     setTimeout(() => setMessage(''), 2000);
   }
@@ -48,9 +46,7 @@ export default function CirculationPanel({ selectedResource, borrowers, loans, o
     borrowersList.push({
       id: crypto.randomUUID(),
       name: newBorrower.name,
-      code: newBorrower.code,
-      role: newBorrower.role as Borrower["role"],
-      yearLevel: newBorrower.yearLevel,
+      email: '',
     });
     saveBorrowers(borrowersList);
     setNewBorrower({ name: '', code: '', role: 'Student', yearLevel: '' });

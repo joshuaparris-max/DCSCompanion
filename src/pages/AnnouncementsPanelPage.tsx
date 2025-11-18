@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { initialAnnouncements } from '../data/announcementsPanel';
 import type { AnnouncementItem } from '../data/announcementsPanel';
-import PageContainer from '../components/layout/PageContainer';
+import PageContainer from '../components/Layout/PageContainer';
 
 export default function AnnouncementsPanelPage() {
   const [items, setItems] = useState<AnnouncementItem[]>(initialAnnouncements);

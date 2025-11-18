@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { staffDirectory } from '../data/staffDirectory';
-import PageContainer from '../components/layout/PageContainer';
+import PageContainer from '../components/Layout/PageContainer';
 
 
 export default function StaffDirectoryPage() {

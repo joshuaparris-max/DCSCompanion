@@ -1,4 +1,4 @@
-import PageContainer from '../components/layout/PageContainer';
+import PageContainer from '../components/Layout/PageContainer';
 import { onboardingSteps } from '../data/onboardingGuide';
 
 const OnboardingGuidePage: React.FC = () => {

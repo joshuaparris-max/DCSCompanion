@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { eventRoster } from '../data/eventRoster';
-import PageContainer from '../components/layout/PageContainer';
+import PageContainer from '../components/Layout/PageContainer';
 
 
 function formatDate(date: string) {

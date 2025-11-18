@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { dcsKbDocs, KbDoc } from '../data/dcsKb';
+import { dcsKbDocs } from '../data/dcsKb';
+import type { KbDoc } from '../data/dcsKb';
 
 const KnowledgeBase: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');

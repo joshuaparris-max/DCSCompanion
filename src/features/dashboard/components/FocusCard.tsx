@@ -1,4 +1,3 @@
-import React from 'react';
 import { today } from '../../../lib/dateUtils';
 
 interface FocusEntry {

@@ -8,7 +8,7 @@ const KnowledgeBasePage: React.FC = () => {
   const filteredItems = dcsKnowledgeBase.filter(item => {
     const matchesSearch =
       item.title.toLowerCase().includes(search.toLowerCase()) ||
-      item.tags.some(tag => tag.toLowerCase().includes(search.toLowerCase()));
+      (item.tags ?? []).some(tag => tag.toLowerCase().includes(search.toLowerCase()));
     const matchesCategory = categoryFilter ? item.category === categoryFilter : true;
     return matchesSearch && matchesCategory;
   });

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { dcsKnowledgeBase } from '../data/dcsKnowledgeBase';
-import PageContainer from '../components/layout/PageContainer';
+import PageContainer from '../components/Layout/PageContainer';
 
 const categories = [
   'All',

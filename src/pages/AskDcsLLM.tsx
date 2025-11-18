@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { getKbContext } from '../data/dcsKnowledgeBase';
 import { askDcsLLM } from '../services/llmClient';
 import MarkdownMessage from '../components/MarkdownMessage';
-import PageContainer from '../components/layout/PageContainer';
+import PageContainer from '../components/Layout/PageContainer';
 
 interface Message {
   id: string;

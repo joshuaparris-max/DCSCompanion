@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { supportPanelItems } from '../data/preschoolWellingtonSupport';
-import PageContainer from '../components/layout/PageContainer';
+import PageContainer from '../components/Layout/PageContainer';
 
 export default function PreschoolWellingtonSupportPage() {
   const [campus, setCampus] = useState<'Preschool' | 'Wellington'>('Preschool');
@@ -28,9 +28,9 @@ export default function PreschoolWellingtonSupportPage() {
               {item.contacts && item.contacts.length > 0 && (
                 <div className="mb-1 text-sm">
                   <span className="font-semibold">Contacts: </span>
-                  {item.contacts.map((c, i) => (
+                  {(item.contacts ?? []).map((c, i) => (
                     <span key={c.email}>
-                      {c.name} ({c.role}) <a href={`mailto:${c.email}`} className="text-blue-600 dark:text-blue-400 underline">Email</a>{i < item.contacts.length - 1 ? ', ' : ''}
+                      {c.name} ({c.role}) <a href={`mailto:${c.email}`} className="text-blue-600 dark:text-blue-400 underline">Email</a>{i < (item.contacts?.length ?? 0) - 1 ? ', ' : ''}
                     </span>
                   ))}
                 </div>
@@ -38,7 +38,7 @@ export default function PreschoolWellingtonSupportPage() {
               {item.links && item.links.length > 0 && (
                 <div className="mb-1 text-sm">
                   <span className="font-semibold">Links: </span>
-                  {item.links.map((l, i) => (
+                  {item.links.map(l => (
                     <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 underline mr-2">{l.label}</a>
                   ))}
                 </div>

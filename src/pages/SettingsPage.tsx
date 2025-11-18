@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PageContainer from '../components/layout/PageContainer';
+import PageContainer from '../components/Layout/PageContainer';
 
 const SettingsPage: React.FC = () => {
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');

@@ -4,6 +4,7 @@ export type DcsKbTopic = {
   title: string;
   summary: string;
   links?: { label: string; url: string }[];
+  tags?: string[];
 };
 
 export const dcsKnowledgeBase: DcsKbTopic[] = [
@@ -135,7 +136,7 @@ export const dcsKnowledgeBase: DcsKbTopic[] = [
   },
   {
     id: '18',
-    category: 'Admin',
+    category: 'General',
     title: 'Print preschool sign-in sheets',
     summary: 'How to print daily sign-in sheets for Dubbo Christian Preschool, including where to find templates and record keeping tips.',
   },

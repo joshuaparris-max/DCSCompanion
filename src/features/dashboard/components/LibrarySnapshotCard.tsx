@@ -1,4 +1,4 @@
-import type { Resource, Borrower, Loan } from '../../../lib/types';
+import type { Resource, Loan } from '../../../lib/types';
 import ResourceStatusBadge from '../../library/components/ResourceStatusBadge';
 import { formatShort } from '../../../lib/dateUtils';
 
