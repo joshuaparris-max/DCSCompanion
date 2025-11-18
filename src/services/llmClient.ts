@@ -3,9 +3,8 @@ export type AskDcsOptions = {
   kbContext?: string;
 };
 
-const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
-const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL = 'llama-3.3-70b-versatile'; // Updated to your Groq-supported model
+// Cloud Function URL - replace YOUR_PROJECT_ID with your actual Firebase project ID
+const CLOUD_FUNCTION_URL = 'https://us-central1-REPLACE_WITH_YOUR_PROJECT_ID.cloudfunctions.net/askDcsLLM';
 
 // Rate limiting: max 10 questions per user per day
 const QUESTIONS_PER_DAY = 10;
@@ -41,31 +40,19 @@ export async function askDcsLLM(opts: AskDcsOptions, userId?: string): Promise<s
     const data = getRateLimitData(userId);
     updateRateLimit(userId, { ...data, count: data.count + 1 });
   }
-  const messages = [
-    {
-      role: 'system',
-      content:
-        'You are a helpful assistant for Dubbo Christian School. Use the following DCS context if relevant, and say “I’m not sure” if you don’t know.\n' +
-        (opts.kbContext ? `DCS Context:\n${opts.kbContext}` : ''),
-    },
-    { role: 'user', content: opts.question },
-  ];
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
     
-    const res = await fetch(GROQ_API_URL, {
+    // Call Firebase Cloud Function (no CORS issues)
+    const res = await fetch(CLOUD_FUNCTION_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${GROQ_API_KEY}`,
       },
       body: JSON.stringify({
-        model: MODEL,
-        messages,
-        max_tokens: 512,
-        temperature: 0.2,
-        stream: false,
+        question: opts.question,
+        kbContext: opts.kbContext,
       }),
       signal: controller.signal,
     });
@@ -73,23 +60,21 @@ export async function askDcsLLM(opts: AskDcsOptions, userId?: string): Promise<s
     clearTimeout(timeoutId);
     
     if (!res.ok) {
-      let errorMsg = `LLM API error: ${res.status} ${res.statusText}`;
-      try {
-        const errData = await res.json();
-        if (errData.error && errData.error.message) {
-          errorMsg += `\n${errData.error.message}`;
-        }
-      } catch {}
-      return errorMsg;
+      const error = await res.json();
+      return `LLM API error: ${error.error || res.statusText}`;
     }
+    
     const data = await res.json();
-    return data.choices?.[0]?.message?.content || 'No answer from LLM.';
+    return data.answer || 'No answer from LLM.';
   } catch (err: any) {
+    if (err.name === 'AbortError') return 'LLM request timed out. Please try again.';
     return `LLM request failed: ${err.message || err}`;
   }
 }
 
 // Usage:
-// 1. Add VITE_GROQ_API_KEY=your-key-here to your .env.local file.
-// 2. Call askDcsLLM({ question, kbContext }, userId) from your chat UI.
-// 3. Rate limiting: 10 questions per user per day via localStorage.
+// 1. Deploy Cloud Function: cd functions && npm run deploy
+// 2. Update CLOUD_FUNCTION_URL with your Firebase project ID
+// 3. Add VITE_GROQ_API_KEY to Firebase Functions secrets
+// 4. Call askDcsLLM({ question, kbContext }, userId) from your chat UI.
+// 5. Rate limiting: 10 questions per user per day via localStorage.
