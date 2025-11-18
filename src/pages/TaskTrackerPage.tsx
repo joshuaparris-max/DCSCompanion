@@ -29,7 +29,6 @@ export default function TaskTrackerPage() {
   return (
     <PageContainer title="ICT/Library Task Tracker">
       <div className="max-w-3xl mx-auto p-4 space-y-4">
-        <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">ICT/Library Task Tracker</h1>
         <div className="flex gap-2 mb-4">
           <input
             className="flex-1 border rounded px-3 py-2"

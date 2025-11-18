@@ -27,7 +27,6 @@ export default function ResourceBookingPage() {
   return (
     <PageContainer title="Resource Booking & Inventory">
       <div className="max-w-3xl mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Resource Booking & Inventory</h1>
         <div className="grid gap-4">
           {resources.map(resource => (
             <div key={resource.id} className="bg-white dark:bg-gray-100 rounded shadow p-4">

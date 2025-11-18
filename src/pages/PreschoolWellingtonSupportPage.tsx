@@ -9,7 +9,6 @@ export default function PreschoolWellingtonSupportPage() {
   return (
     <PageContainer title="Preschool & Wellington Support Panel">
       <div className="max-w-3xl mx-auto p-4 space-y-4">
-        <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">{campus} Support Panel</h1>
         <div className="mb-4 flex gap-2">
           <button
             className={`px-3 py-1 rounded font-semibold ${campus === 'Preschool' ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-300 text-gray-900'}`}

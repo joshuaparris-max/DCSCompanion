@@ -71,7 +71,6 @@ const DcsKnowledgeBase: React.FC = () => {
     <PageContainer title="DCS Knowledge Base">
       <div className="dashboard-grid grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="flex-1 flex flex-col gap-6">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">DCS Knowledge Base</h1>
           <div className="flex flex-col md:flex-row gap-2 md:gap-4">
             <input
               className="p-2 border rounded w-full md:w-1/2"

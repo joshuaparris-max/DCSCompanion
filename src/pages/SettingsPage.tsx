@@ -12,7 +12,6 @@ const SettingsPage: React.FC = () => {
   return (
     <PageContainer title="Settings">
       <div className="max-w-lg mx-auto p-4 space-y-4">
-        <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Settings</h1>
         <div className="mb-4">
           <label className="font-semibold mr-2">Theme:</label>
           <select

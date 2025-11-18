@@ -5,7 +5,6 @@ const OnboardingGuidePage: React.FC = () => {
   return (
     <PageContainer title="Onboarding & Induction Guide">
       <div className="max-w-3xl mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Onboarding & Induction Guide</h1>
         <div className="grid gap-4">
           {onboardingSteps.map(step => (
             <div key={step.id} className="bg-white dark:bg-gray-100 rounded shadow p-4">
