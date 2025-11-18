@@ -74,7 +74,6 @@ const AskDcsLLM: React.FC = () => {
   return (
     <PageContainer title="Ask DCS (LLM)">
       <div className="flex flex-col h-full max-h-[80vh]">
-        <h1 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Ask DCS (LLM)</h1>
         <div className="mb-2 text-gray-600">Ask questions about Dubbo Christian School. This will later use my own LLM integration.</div>
         {recentQuestions.length > 0 && (
           <div className="mb-2">
