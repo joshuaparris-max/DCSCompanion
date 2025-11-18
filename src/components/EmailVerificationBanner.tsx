@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 
 export function EmailVerificationBanner() {
@@ -16,9 +16,6 @@ export function EmailVerificationBanner() {
       setMessage(null);
       await user.reload();
       if (!user.emailVerified) {
-        const { resendVerificationEmail } = await import('../contexts/AuthContext').then(
-          ({ useAuth }) => useAuth()
-        );
         // Use the auth context resend function from parent component instead
         window.dispatchEvent(new CustomEvent('resendVerification'));
         setMessage({ type: 'success', text: 'Verification email sent!' });

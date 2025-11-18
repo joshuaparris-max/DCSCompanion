@@ -66,11 +66,13 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      await registerWithEmail(formData.email, formData.password, {
-        displayName: formData.displayName,
-        department: formData.department,
-        role: formData.role,
-      });
+      await registerWithEmail(
+        formData.email,
+        formData.password,
+        formData.displayName,
+        formData.role,
+        formData.department
+      );
 
       setSuccess(true);
       setFormData({
