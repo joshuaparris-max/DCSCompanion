@@ -158,12 +158,40 @@ export const dcsKnowledgeBase: DcsKbTopic[] = [
   // ...existing code...
 ];
 
-// Utility: get top N relevant KB entries for a question (simple keyword match)
-export function getKbContext(question: string, max: number = 3): string {
-  const q = question.toLowerCase();
-  const matches = dcsKnowledgeBase.filter(item =>
-    item.title.toLowerCase().includes(q) ||
-    item.summary.toLowerCase().includes(q)
-  );
-  return matches.slice(0, max).map(item => `- ${item.title}: ${item.summary}`).join('\n');
+// Utility: get top N relevant KB entries for a question (improved matching)
+export function getKbContext(question: string, max: number = 5): string {
+  const query = question.toLowerCase();
+  const words = query.split(/\W+/).filter(w => w.length > 2);
+  
+  const matches = dcsKnowledgeBase.map(item => {
+    let score = 0;
+    const title = item.title.toLowerCase();
+    const summary = item.summary.toLowerCase();
+    const tags = (item.tags || []).map(t => t.toLowerCase());
+
+    // exact title match is highest
+    if (title.includes(query)) score += 10;
+    
+    // keyword matches
+    words.forEach(word => {
+      if (title.includes(word)) score += 5;
+      if (summary.includes(word)) score += 2;
+      if (tags.some(t => t.includes(word))) score += 3;
+    });
+
+    return { item, score };
+  })
+  .filter(m => m.score > 0)
+  .sort((a, b) => b.score - a.score);
+
+  if (matches.length === 0) return '';
+
+  return matches.slice(0, max).map(m => {
+    const { item } = m;
+    let context = `- ${item.title}: ${item.summary}`;
+    if (item.links && item.links.length > 0) {
+      context += ` (Links: ${item.links.map(l => `${l.label}: ${l.url}`).join(', ')})`;
+    }
+    return context;
+  }).join('\n');
 }
