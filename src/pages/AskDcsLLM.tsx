@@ -10,6 +10,9 @@ interface Message {
   content: string;
 }
 
+const MESSAGE_STORAGE_KEY = 'dcs-chat-messages';
+const RECENT_QUESTIONS_KEY = 'dcs-recent-questions';
+
 const initialMessages: Message[] = [
   {
     id: 'welcome',
@@ -18,13 +21,27 @@ const initialMessages: Message[] = [
   },
 ];
 
+const loadSavedMessages = (): Message[] => {
+  try {
+    const raw = localStorage.getItem(MESSAGE_STORAGE_KEY);
+    if (!raw) return initialMessages;
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed) && parsed.every(item => item && typeof item.id === 'string')) {
+      return parsed as Message[];
+    }
+  } catch {
+    // ignore invalid storage
+  }
+  return initialMessages;
+};
+
 const AskDcsLLM: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [messages, setMessages] = useState<Message[]>(loadSavedMessages);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [recentQuestions, setRecentQuestions] = useState<string[]>(() => {
     try {
-      return JSON.parse(localStorage.getItem('recentQuestions') || '[]');
+      return JSON.parse(localStorage.getItem(RECENT_QUESTIONS_KEY) || '[]');
     } catch {
       return [];
     }
@@ -34,6 +51,23 @@ const AskDcsLLM: React.FC = () => {
   useEffect(() => {
     chatRef.current?.scrollTo({ top: chatRef.current.scrollHeight, behavior: 'smooth' });
   }, [messages]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(MESSAGE_STORAGE_KEY, JSON.stringify(messages));
+    } catch {
+      // ignore storage failures
+    }
+  }, [messages]);
+
+  const clearConversation = () => {
+    setMessages(initialMessages);
+    try {
+      localStorage.removeItem(MESSAGE_STORAGE_KEY);
+    } catch {
+      // ignore
+    }
+  };
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -76,22 +110,32 @@ const AskDcsLLM: React.FC = () => {
       <div className="flex flex-col h-full max-h-[80vh]">
         <h1 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Ask DCS (LLM)</h1>
         <div className="mb-2 text-gray-600">Ask questions about Dubbo Christian School. This will later use my own LLM integration.</div>
-        {recentQuestions.length > 0 && (
-          <div className="mb-2">
-            <div className="text-xs font-semibold mb-1 text-gray-500">Recent Questions:</div>
-            <div className="flex flex-wrap gap-2">
-              {recentQuestions.map(q => (
-                <button
-                  key={q}
-                  className="px-2 py-1 bg-gray-200 rounded text-xs hover:bg-blue-100"
-                  onClick={() => setInput(q)}
-                >
-                  {q}
-                </button>
-              ))}
+        <div className="flex flex-col gap-2 mb-2">
+          {recentQuestions.length > 0 && (
+            <div>
+              <div className="text-xs font-semibold mb-1 text-gray-500">Recent Questions:</div>
+              <div className="flex flex-wrap gap-2">
+                {recentQuestions.map(q => (
+                  <button
+                    key={q}
+                    className="px-2 py-1 bg-gray-200 rounded text-xs hover:bg-blue-100"
+                    onClick={() => setInput(q)}
+                    type="button"
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+          <button
+            type="button"
+            className="self-start px-3 py-1 text-xs font-semibold text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50"
+            onClick={clearConversation}
+          >
+            Clear conversation
+          </button>
+        </div>
         <div
           ref={chatRef}
           className="flex-1 overflow-y-auto bg-gray-100 rounded p-4 mb-2 space-y-2"

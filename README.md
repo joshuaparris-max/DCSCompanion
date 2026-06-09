@@ -7,6 +7,7 @@ A personal helper app for Dubbo Christian School IT/Library support staff.
 - DCS Knowledge Base with search, category filter, pin/favorite, expandable details, and import/export of favorites.
 - Ask DCS (LLM) chat with Groq LLM integration, markdown answers, recent questions, and KB context.
 - User settings (theme toggle, dark/light mode).
+- Portable local-data backup and restore from Settings.
 
 ## Setup
 1. Clone the repo and run `npm install`.
