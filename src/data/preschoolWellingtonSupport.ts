@@ -8,61 +8,34 @@ export type SupportPanelItem = {
   checklist?: string[];
 };
 
+// SAMPLE DATA - Replace with real support panel data loaded from Firestore
+// Do NOT commit real staff names or internal procedures to this repo.
+// Load live support data from Firestore (kb collection type='support')
 export const supportPanelItems: SupportPanelItem[] = [
   {
-    id: 'preschool-daily',
+    id: 'sample-campus1-support',
     campus: 'Preschool',
-    title: 'Preschool Daily Routine',
-    description: 'Key times and tasks for Dubbo Christian Preschool each day.',
+    title: 'Campus 1 Support',
+    description: 'Key contacts and information for Campus 1.',
     checklist: [
-      '8:30am: Sign-in opens',
-      'Morning: Learning activities',
-      '11:30am: Lunch',
-      '1:00pm: Rest/quiet time',
-      '3:30–4:00pm: Pick-up and sign-out',
-      'Mark attendance in system',
-      'Check for parent messages',
+      'Contact support for assistance',
+      'Check internal portal for updates',
     ],
     contacts: [
-      { name: 'Michelle Broadley', email: 'michelle.broadley@dubbocs.edu.au', role: 'Preschool Director' }
+      { name: 'Support Team', email: 'support@school.example.com', role: 'General Support' }
     ]
   },
   {
-    id: 'preschool-compliance',
-    campus: 'Preschool',
-    title: 'Preschool Compliance Checklist',
-    description: 'Daily/weekly compliance tasks for DCP.',
-    checklist: [
-      'Check staff:child ratios',
-      'Record attendance',
-      'Update incident/illness log',
-      'Check immunization records',
-      'Complete daily safety check',
-      'Sign off by Nominated Supervisor',
-    ]
-  },
-  {
-    id: 'wellington-contacts',
+    id: 'sample-campus2-support',
     campus: 'Wellington',
-    title: 'Wellington Campus Key Contacts',
-    description: 'Who to contact for support at Wellington Christian School.',
+    title: 'Campus 2 Support',
+    description: 'Key contacts and information for Campus 2.',
+    checklist: [
+      'Contact support for assistance',
+      'Check internal portal for updates',
+    ],
     contacts: [
-      { name: 'Peter Reuben', email: 'peter.reuben@wellingtoncs.nsw.edu.au', role: 'Principal' },
-      { name: 'DCS ICT', email: 'ict@dubbocs.edu.au', role: 'ICT Support' }
-    ]
-  },
-  {
-    id: 'wellington-daily',
-    campus: 'Wellington',
-    title: 'Wellington Daily Routine',
-    description: 'Key times and tasks for Wellington Christian School.',
-    checklist: [
-      '8:30am: Staff briefing',
-      '9:00am: Classes begin',
-      '11:00am: Recess',
-      '1:00pm: Lunch',
-      '3:10pm: Dismissal',
-      'Check Schoolbox for announcements',
+      { name: 'Support Team', email: 'support@school.example.com', role: 'General Support' }
     ]
   }
 ];

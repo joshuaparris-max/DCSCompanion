@@ -10,51 +10,35 @@ export type StaffContact = {
   quickFor?: string[]; // e.g. ["WiFi issues", "Preschool admin"]
 };
 
+// SAMPLE DATA - Replace with real staff data loaded from Firestore
+// Do NOT commit real staff emails or names to this repo.
+// Load live staff directory from Firestore (users/{uid}/staffDirectory or kb collection type='staff-directory')
 export const staffDirectory: StaffContact[] = [
   {
-    id: 'arundell',
-    name: 'Paul Arundell',
-    role: 'Executive Principal',
+    id: 'sample-principal',
+    name: 'Principal Name',
+    role: 'Principal',
     department: 'Leadership',
-    email: 'paul.arundell@dubbocs.edu.au',
+    email: 'principal@school.example.com',
     photoUrl: '',
-    quickFor: ['Leadership', 'All campuses'],
+    quickFor: ['Leadership', 'General queries'],
   },
   {
-    id: 'collins',
-    name: 'Greg Collins',
-    role: 'Deputy Principal',
-    department: 'Leadership',
-    email: 'greg.collins@dubbocs.edu.au',
-    photoUrl: '',
-    quickFor: ['Primary/Secondary queries', 'Leadership'],
-  },
-  {
-    id: 'morris',
-    name: 'Scott Morris',
-    role: 'Business Manager',
-    department: 'Admin',
-    email: 'scott.morris@dubbocs.edu.au',
-    photoUrl: '',
-    quickFor: ['Finance', 'Facilities', 'HR', 'Resource requests'],
-  },
-  {
-    id: 'ictmgr',
-    name: 'ICT Manager',
-    role: 'ICT Manager',
+    id: 'sample-ict',
+    name: 'ICT Coordinator',
+    role: 'ICT Support',
     department: 'ICT',
-    email: 'ict@dubbocs.edu.au',
+    email: 'ict@school.example.com',
     photoUrl: '',
-    quickFor: ['WiFi issues', 'Device support', 'Network'],
+    quickFor: ['Tech support', 'Device issues', 'Network'],
   },
   {
-    id: 'broadley',
-    name: 'Michelle Broadley',
-    role: 'Preschool Director',
-    department: 'Preschool',
-    email: 'michelle.broadley@dubbocs.edu.au',
+    id: 'sample-library',
+    name: 'Library Staff',
+    role: 'Library Coordinator',
+    department: 'Library',
+    email: 'library@school.example.com',
     photoUrl: '',
-    quickFor: ['Preschool admin', 'Preschool compliance'],
+    quickFor: ['Library', 'Resource requests'],
   },
-  // Add more staff as needed
 ];
