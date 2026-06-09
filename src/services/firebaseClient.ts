@@ -13,9 +13,11 @@ const env = {
 
 // Validate required environment variables in production
 const isProduction = import.meta.env.PROD;
-const missingEnvVars = Object.entries(env)
+export const missingFirebaseEnvVars = Object.entries(env)
   .filter(([key, value]) => key !== 'useEmulator' && !value)
   .map(([key]) => key);
+
+const missingEnvVars = missingFirebaseEnvVars;
 
 if (missingEnvVars.length > 0) {
   const errorMsg = `[Firebase] Missing required environment variables: ${missingEnvVars.join(', ')}`;
@@ -60,5 +62,7 @@ export const auth = getAuth(app);
 
 // Initialize Cloud Firestore and get a reference to the service
 export const db = getFirestore(app);
+
+export const hasFirebaseConfig = missingFirebaseEnvVars.length === 0;
 
 export default app;

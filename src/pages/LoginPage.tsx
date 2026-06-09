@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { missingFirebaseEnvVars } from '../services/firebaseClient';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -20,6 +21,7 @@ export default function LoginPage() {
     }
   }, [user, navigate, location]);
 
+  const isConfigIncomplete = missingFirebaseEnvVars.length > 0;
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -68,11 +70,17 @@ export default function LoginPage() {
             Welcome back! Please log in to continue.
           </p>
         </div>
-
-        {/* Form Card */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Error Message */}
+            {isConfigIncomplete && (
+              <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+                <p className="font-semibold">Firebase configuration incomplete</p>
+                <p>
+                  Missing environment values: {missingFirebaseEnvVars.join(', ')}.
+                  Add them to <code className="font-mono">.env.local</code> and rebuild the app.
+                </p>
+              </div>
+            )}
             {error && (
               <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-md">
                 <p className="text-red-800 dark:text-red-300 text-sm font-medium">
