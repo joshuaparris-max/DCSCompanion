@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 interface JournalEntry {
   id: string;
@@ -8,20 +8,22 @@ interface JournalEntry {
 }
 
 const JournalPage: React.FC = () => {
-  const [entries, setEntries] = useState<JournalEntry[]>([]);
+  const [entries, setEntries] = useState<JournalEntry[]>(() => {
+    const savedEntries = localStorage.getItem('journalEntries');
+    if (!savedEntries) return [];
+    try {
+      const parsed = JSON.parse(savedEntries);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  });
   const [currentEntry, setCurrentEntry] = useState({
     id: '',
     date: new Date().toISOString().split('T')[0],
     title: '',
     content: '',
   });
-
-  useEffect(() => {
-    const savedEntries = localStorage.getItem('journalEntries');
-    if (savedEntries) {
-      setEntries(JSON.parse(savedEntries));
-    }
-  }, []);
 
   const saveEntry = () => {
     const updatedEntries = [...entries, { ...currentEntry, id: Date.now().toString() }];

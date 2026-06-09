@@ -121,7 +121,9 @@ const DcsKnowledgeBase: React.FC = () => {
           setFavorites(imported);
           localStorage.setItem('kbFavorites', JSON.stringify(imported));
         }
-      } catch {}
+      } catch (error) {
+        console.warn('Could not import KB favourites', error);
+      }
     };
     reader.readAsText(file);
   };

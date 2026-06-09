@@ -82,12 +82,12 @@ export async function askDcsLLM(opts: AskDcsOptions, userId?: string): Promise<s
       return `LLM API error: ${res.status} ${res.statusText}`;
     }
     
-    const data = await res.json();
+    const data = await res.json() as { choices?: Array<{ message?: { content?: string } }> };
     return data.choices?.[0]?.message?.content || 'No answer from LLM.';
-  } catch (err: any) {
-    if (err.name === 'AbortError') return 'LLM request timed out. Please try again.';
+  } catch (err: unknown) {
+    if (err instanceof Error && err.name === 'AbortError') return 'LLM request timed out. Please try again.';
     console.error('LLM error:', err);
-    return `LLM request failed: ${err.message || err}`;
+    return `LLM request failed: ${err instanceof Error ? err.message : String(err)}`;
   }
 }
 

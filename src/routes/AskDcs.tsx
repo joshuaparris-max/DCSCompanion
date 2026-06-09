@@ -22,7 +22,7 @@ const AskDcs: React.FC = () => {
     try {
       const response = await askDcs(question, snippets);
       setAnswer(response);
-    } catch (error) {
+    } catch {
       setAnswer('Error: Unable to fetch answer.');
     } finally {
       setLoading(false);
