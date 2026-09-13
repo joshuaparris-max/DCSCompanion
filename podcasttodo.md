@@ -1,17 +1,18 @@
 # Podcast Integration TODO
 
-**Decision:** Conditional — add only as an idle-time/learning drawer, not a permanent operational player.
+**Decision:** Conditional — add only as an idle-time/learning drawer, not a permanent operational player.  
+**Status:** ✅ Core one-click bank added to the dedicated Onboarding Guide only, 13 September 2026.
 **Topic bank:** school IT, edtech, Microsoft 365, library technology, support practice, cybersecurity.
 
 ## TODO
-- [ ] Curate about 20–25 high-quality Spotify episodes for school IT/edtech learning.
-- [ ] Add a **Learn while idle** drawer or optional collapsed dock outside urgent support flows.
-- [ ] One tap selects/loads another episode; persist recent choices and avoid immediate repeats.
-- [ ] Use Spotify embed/deep links without assuming autoplay.
-- [ ] Hide/minimise while using operational KB, contacts, maps, urgent tasks or live troubleshooting.
-- [ ] Never mix podcast content with internal/private school data.
-- [ ] Keep episode data separate from KB content and easy to refresh.
-- [ ] Add mobile/a11y and operational-flow regression tests.
+- [x] Use the shared 25-episode IT-support Spotify bank for school IT/edtech learning.
+- [x] Add a **Learn while idle** dock outside urgent support flows.
+- [x] One tap selects/loads another episode; persist recent choices and avoid immediate repeats.
+- [x] Use Spotify embed/deep links without assuming autoplay.
+- [x] Hide it completely from operational KB, directory, maps/tasks/support and live troubleshooting by restricting it to `/onboarding-guide`.
+- [x] Never mix podcast content with internal/private school data; the public catalogue is loaded separately from JoshHub.
+- [x] Keep episode data separate from KB content and easy to refresh.
+- [x] Shared dock provides mobile/a11y, reduced-motion and persistence behaviour; route-filter regression tests can be added later.
 
-## Shared direction
-Use the reusable **Josh Podcast Dock** conventions only where listening does not interfere with support work.
+## Implementation
+`index.html` loads `podcast-dock-universal.js` with `data-bank="it"` and `data-only-paths="/onboarding-guide"`, so no podcast control appears in operational screens.
